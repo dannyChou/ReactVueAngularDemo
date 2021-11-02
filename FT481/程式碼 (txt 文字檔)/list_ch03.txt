@@ -1,0 +1,497 @@
+﻿
+List 3-1
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hello</title>
+	<link rel="stylesheet" href="style.css"></link>
+</head>
+<body>
+	<p><script src="hello.js"></script></p>
+</body>
+</html>
+
+
+List 3-2
+class MyClass {
+	constructor(public title: string, public message: string){}
+
+	print(){
+		return "<h1>" + this.title + "</h1>" +
+			"<p>" + this.message + "</p>";
+	}
+};
+
+var msg:MyClass = new MyClass("Hello", "this is TypeScript sample!");
+
+document.write(msg.print());
+
+
+List 3-3
+var MyClass = (function () {
+	function MyClass(title, message) {
+		this.title = title;
+		this.message = message;
+	}
+	MyClass.prototype.print = function () {
+		return "<h1>" + this.title + "</h1>" + "<p>" + this.message + "</p>";
+	};
+	return MyClass;
+})();
+;
+
+var msg = new MyClass("Hello", "this is TypeScript sample!");
+
+document.write(msg.print());
+
+
+List 3-4
+{
+	// See https://go.microsoft.com/fwlink/?LinkId=733558
+	// for the documentation about the tasks.json format
+	"version": "0.1.0",
+	"command": "tsc",
+	"isShellCommand": true,
+	"args": ["-p", "."],
+	"showOutput": "silent",
+	"problemMatcher": "$tsc"
+}
+
+
+List 3-5
+var price:number = 12300;
+var tax:number = 0.05;
+
+var res:number = price * (1.0 + tax);
+var msg:string = price + '元的含稅金額為' + res + '元。';
+
+document.write('<h1>Sample</h1>');
+document.write(msg);
+
+
+List 3-6
+var price = 12300;
+var tax = 0.05;
+
+var res = price * (1.0 + tax);
+var msg = price + 'price + '元的含稅金額為' + res + '元。';
+
+document.write('<h1>Sample</h1>');
+document.write(msg);
+
+
+List 3-7
+var price = 12300;
+var tax = 0.05;
+
+var res = price * (1.0 + tax);
+var msg = price + '元的含稅金額為' + res + '元。';
+
+document.write('<h1>Sample</h1>');
+document.write(msg);
+
+
+List 3-8
+let arr:number[] = [123, 456, 789];
+let total:number = 0;
+for(let i = 0;i < arr.length;i++){
+	total += arr[i];
+}
+document.write('<h1>Array</h1>');
+document.write('<p>total: ' + total + '</p>');
+
+
+List 3-9
+enum Season {spring, summer, autumn, winter};
+
+let s:Season = Season.summer; // 可以試著換成其它季節
+
+switch(s){
+case Season.spring:
+	document.write('<h1>Spring</h1>');
+	break;
+case Season.summer:
+	document.write('<h1>Summer</h1>');
+	break;
+case Season.autumn:
+	document.write('<h1>Autumn</h1>');
+	break;
+case Season.winter:
+	document.write('<h1>Winter</h1>');
+	break;
+}
+document.write('<p>此頁面會顯示目前的季節。</p>');
+
+List 3-10
+enum gender {male, female};
+type myname = string;
+type mail = string;
+type age = number;
+
+let person:[myname, mail, gender, age];
+person = ['taro', 'taro@yamada', gender.male, 23];
+
+document.write('<h1>Tuple</h1>');
+document.write('<p>' + person + '</p>');
+
+
+List 3-11
+enum gender {male, female};
+type myname = string;
+type mail = string;
+type age = number;
+
+type Person = [myname, mail, gender, age];
+
+let data:Person[] = []
+data.push(['taro', 'taro@yamada', gender.male, 23]);
+data.push(['hanako', 'hanako@flower', gender.female, 45]);
+data.push(['sachiko', 'sachiko@happy', gender.female, 67]);
+
+document.write('<h1>Tuple</h1>');
+document.write('<p>' + data[0] + '</p>');
+document.write('<p>' + data[1] + '</p>');
+document.write('<p>' + data[2] + '</p>');
+
+
+List 3-12
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hello</title>
+	<script src="hello.js"></script>
+	<link rel="stylesheet" href="style.css"></link>
+</head>
+<body>
+	<h1>sample</h1>
+	<p id="msg"></p>
+	<input type="text" id="text1">
+	<input type="button" onclick="doClick();" value="CLICK">
+</body>
+</html>
+
+
+List 3-13
+function calc(price:number, tax:number):number {
+	return Math.floor(price * (1.0 + tax));
+}
+
+function doClick():void {
+	let text1:HTMLInputElement = document.querySelector('#text1');
+	let msg:Element = document.querySelector('#msg');
+	msg.innerHTML = calc(text1.value, 0.05) + '元';
+}
+
+
+List 3-14
+function calc(price:number, tax?:number):number {
+	let tx = 0;
+	if (tax){
+		tx = tax;
+	} else {
+		tx = 0.05
+	}
+	return Math.floor(price * (1.0 + tx));
+}
+
+function doClick():void {
+	let text1:HTMLInputElement = document.querySelector('#text1');
+	let msg:Element = document.querySelector('#msg');
+	msg.innerHTML = calc(text1.value) + '元';
+}
+
+
+List 3-15
+function convert(item:number):string;
+function convert(item:string):string;
+function convert(item:boolean):string;
+
+function convert(item:any):string {
+	switch (typeof item) {
+		case 'number':
+		return Math.floor(item).toString();
+		case 'string':
+		return item.toUpperCase();
+		case 'boolean':
+		return item ? 'yes' : 'no';
+	}
+}
+
+function doClick():void {
+	let val:string = 'hello'; // 可以試著換成不同的值
+	let msg:Element = document.querySelector('#msg');
+	msg.innerHTML = convert(val);
+}
+
+
+List 3-16
+function convert<T>(item:T):string {
+	switch (typeof item) {
+		case 'number':
+		return Math.floor(item);
+		case 'string':
+		return item.toUpperCase();
+		case 'boolean':
+		return item ? 'yes' : 'no';
+		default:
+		return 'any';
+	}
+}
+
+
+List 3-17
+function total(...item:number[]):number {
+	let re:number = 0;
+	for(let i:number = 0;i < item.length;i++) {
+		re += item[i];
+	}
+	return re;
+}
+
+function doClick():void {
+	let msg:Element = document.querySelector('#msg');
+	msg.innerHTML = total(1, 2, 3, 4, 5); // ●
+}
+
+
+List 3-18
+function print(n:number, f:(number)=>number):string{
+	var re:number = f(n);
+	return '<p>結果：' + re + '<\p>';
+}
+
+function doClick():void {
+	let val:number = document.querySelector('#text1').value * 1;
+	let msg:Element = document.querySelector('#msg');
+
+	let a:(number)=>number = (n:number)=> n * n;
+	let b:(number)=>number = (n:number)=>{
+		let total:number = 0;
+		for(let i:number = 1;i <= n;i++) {
+			total += i;
+		}
+		return total;
+	};
+
+	msg.innerHTML = print(val, b); // 第2個參數可以填入a或b
+}
+
+
+List 3-19
+class Person {
+	name:string;
+	age:number;
+
+	constructor(n:string, y:number){
+		this.name = n;
+		this.age = y;
+	}
+
+	print():string {
+		let msg:string = '<p>My name is ' + this.name + 
+			'. I am ' + this.age + 'years old.</p>';
+		return msg;
+	}
+}
+
+function doClick():void {
+	let val:string = document.querySelector('#text1').value;
+	let arr:string[] = val.split(',');
+
+	let obj:Person = new Person(arr[0], parseInt(arr[1]));
+
+	let msg:Element = document.querySelector('#msg');
+	msg.innerHTML = obj.print();
+}
+
+
+List 3-20
+class Person {
+	public name:string;
+	private _age:number;
+
+	get age():number {
+		return this._age;
+	}
+	set age(y:number) {
+		this._age = y < 0 ? 0 : y;
+	}
+
+	constructor(n:string, y:number){
+		this.name = n;
+		this.age = y;
+	}
+
+	print():string {
+		let msg:string = '<p>My name is ' + this.name + 
+			'. I am ' + this.age + 'years old.</p>';
+		return msg;
+	}
+}
+
+
+List 3-21
+class Person {
+	public name:string;
+	public age:number;
+
+	constructor(n:string, y:number){
+		this.name = n;
+		this.age = y;
+	}
+
+	print():string {
+		let msg:string = '<p>My name is ' + this.name +
+			'. I am ' + this.age + 'years old.</p>';
+		return msg;
+	}
+}
+
+class Student extends Person {
+	public grade:number;
+
+	constructor(n:string, y:number, g:number) {
+		super(n, y);
+		this.grade = g;
+	}
+
+	printAll():string {
+		let msg:string = '<p>我是 ' + this.name + '，今年 ' + this.age +
+			' 歲，現在 ' + this.grade + ' 年級。</p>';
+		return msg;		
+	}
+}
+
+function doClick():void {
+	let msg:Element = document.querySelector('#msg');
+	let val:string = document.querySelector('#text1').value;
+	
+	let arr:string[] = val.split(',');
+	if (arr.length == 2){
+		let obj:Person = new Person(arr[0], parseInt(arr[1]));
+		msg.innerHTML = obj.print();
+	}
+	if (arr.length == 3){
+		let obj:Student = new Student(arr[0], parseInt(arr[1]), parseInt(arr[2]);
+		msg.innerHTML = obj.printAll();
+	}
+}
+
+
+List 3-22
+class Student extends Person {
+	public grade:number;
+
+	constructor(n:string, y:number, g:number) {
+		super(n, y);
+		this.grade = g;
+	}
+
+	print():string {
+		let msg:string = '<p>我是 ' + this.name + '，今年 ' + this.age +
+			' 歲，現在 ' + this.grade + ' 年級。</p>';
+		return msg;		
+	}
+}
+
+
+List 3-23
+function doClick():void {
+	let msg:Element = document.querySelector('#msg');
+	let val:string = document.querySelector('#text1').value;
+
+	let arr:string[] = val.split(',');
+	let obj:Person = null;
+	if (arr.length == 2){
+		obj = new Person(arr[0], parseInt(arr[1]));
+	}
+	if (arr.length == 3){
+		obj = new Student(arr[0], parseInt(arr[1]), parseInt(arr[2]);
+	}
+	msg.innerHTML = obj.print();
+}
+
+
+List 3-24
+class Person {
+	public name:string;
+	public age:number;
+	public static tag = 'p';
+
+	constructor(n:string, y:number){
+		this.name = n;
+		this.age = y;
+	}
+
+	print():string {
+		let msg:string = '<' + Person.tag + '>My name is ' + this.name + 
+			'. I am ' + this.age + 'years old.</' + Person.tag + '>';
+		return msg;
+	}
+}
+
+function doClick():void {
+	let msg:Element = document.querySelector('#msg');
+	let val:string = document.querySelector('#text1').value;
+
+	let arr:string[] = val.split(',');
+	let obj:Person = new Person(arr[0], parseInt(arr[1]));
+	Person.tag = 'h1'; // ●改變類別屬性tag的值
+	msg.innerHTML = obj.print();
+}
+
+
+List 3-25
+interface Man {
+	name:string;
+	age:number;
+
+	print():string;
+}
+
+class Person implements Man {
+	public name:string;
+	public age:number;
+
+	constructor(n:string, y:number){
+		this.name = n;
+		this.age = y;
+	}
+
+	print():string {
+		let msg:string = '<p>My name is ' + this.name + 
+			'. I am ' + this.age + 'years old.</p>';
+		return msg;
+	}
+}
+
+class Student implements Man {
+	public name:string;
+	public age:number;
+	public grade:number;
+
+	constructor(n:string, y:number, g:number) {
+		this.name = n;
+		this.age = y;
+		this.grade = g;
+	}
+
+	print():string {
+		let msg:string = '<p>我是 ' + this.name + '，今年 ' + this.age +
+			' 歲，現在 ' + this.grade + ' 年級。</p>';
+		return msg;		
+	}
+}
+
+var data:Man[] = [];
+data.push(new Person('taro', 37));
+data.push(new Student('hanako', 17, 3));
+data.push(new Person('sachiko', 45));
+
+function doClick():void {
+	let msg:Element = document.querySelector('#msg');
+	let val:number = document.querySelector('#text1').value * 1;
+
+	let obj:Man = data[val];
+	msg.innerHTML = obj.print();
+}

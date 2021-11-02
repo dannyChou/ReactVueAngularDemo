@@ -1,0 +1,599 @@
+﻿List 5-1
+<script src="jquery-3.0.0.min.js"></script>
+<script src="underscore-min.js"></script>
+<script src="backbone-min.js"></script>
+
+
+List 5-2
+<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.3.3/backbone-min.js"></script>
+
+
+List 5-3
+{
+	"name": "backbone",
+	"description": "Give your JS App some Backbone.",
+	"dependencies": {
+		"underscore": ">=1.8.3",
+		"backbone": ">=1.3.3"
+	},
+	"main": "backbone.js",
+	"version": "1.3.3",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/jashkenas/backbone.git"
+	},
+	"readme": "ERROR: No README data found!"
+}
+
+
+List 5-4
+{
+	"name": "backbone",
+	"main": "backbone.js",
+	"dependencies": {
+		"backbone": ">=1.3.3",
+		"underscore": ">=1.8.3"
+	},
+	"ignore": ["docs", "package.json"]
+}
+
+
+List 5-5
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hello</title>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.3.3/backbone-min.js"></script>
+
+	<script src="main.js"></script>
+	<link rel="stylesheet" href="style.css"></link>
+</head>
+<body>
+	<h1>Backbone.js</h1>
+	<div id="msg"></div>
+</body>
+</html>
+
+
+List 5-6
+body {
+	color: #999;
+	padding: 5px 20px;
+	line-height: 150%;
+}
+p {
+	font-size: 18pt;
+}
+
+
+List 5-7
+$(function() {
+	var MyView = Backbone.View.extend({
+		render: function() {
+			this.$el.text('Hello Backbone.js!');
+			return this;
+		}
+	});
+
+	var myView = new MyView();
+
+	$('#msg').append(myView.render().$el);
+
+});
+
+
+List 5-8
+function initial() {
+	var MyView = Backbone.View.extend({
+		render: function() {
+			this.el.textContent = 'Hello Backbone.js!';
+			return this;
+		}
+	});
+
+	var myView = new MyView();
+
+	document.querySelector('#msg').appendChild(myView.render().el);
+
+}
+
+
+List 5-9
+<body onload="initial();">
+
+
+List 5-10
+<body onload="initial();">
+	<h1>Backbone.js</h1>
+	<div id="msg">
+		<p id="title"></p>
+		<ul>
+			<li id="item1"></li>
+			<li id="item2"></li>
+			<li id="item3"></li>
+		</ul>
+	</div>
+</body>
+
+
+List 5-11
+$(function() {
+	var MyView = Backbone.View.extend({
+		el:'#msg',
+		
+		render: function() {
+			this.$('#title').text('※使用作業系統平台')
+			this.$('#item1').text('Windows');
+			this.$('#item2').text('macOS');
+			this.$('#item3').text('Linux');
+			return this;
+		}
+	});
+
+	var myView = new MyView();
+	myView.render();
+});
+
+
+List 5-12
+$(function() {
+	var MyView = Backbone.View.extend({
+		el:'#msg',
+
+		initialize:function() {
+			this.$title = $('#title');
+			this.$item1 = $('#item1');
+			this.$item2 = $('#item2');
+			this.$item3 = $('#item3');
+		},
+
+		render: function() {
+			this.$title.text('※使用作業系統平台')
+			this.$item1.text('Windows');
+			this.$item2.text('macOS');
+			this.$item3.text('Linux');
+			return this;
+		}
+	});
+
+	var myView = new MyView();
+	myView.render();
+});
+
+
+List 5-13
+<body>
+	<h1>Backbone.js</h1>
+	<div>
+		<input type="button" id="btn1" value="click">
+	</div>
+</body>
+
+
+List 5-14
+$(function() {
+	var ButtonView =  Backbone.View.extend({
+		el:'#btn1',
+
+		events:{
+			'click':'onclick'
+		},
+
+		onclick(event){
+			alert('click me!');
+		}
+	});
+
+	var buttonView = new ButtonView();
+
+});
+
+
+List 5-15
+<body>
+	<h1>Backbone.js</h1>
+	<div id="msg"></div>
+</body>
+
+
+List 5-16
+.msg {
+	padding: 5px 10px;
+}
+
+
+List 5-17
+$(function() {
+	var MyTagView =  Backbone.View.extend({
+		tagName: 'p',
+		className: 'msg',
+		id: function(){ return _.uniqueId('item'); },
+		attributes: {
+			'style': 'color:white; background:red;padding:5px 10px;'
+		}
+	});
+
+	var myTag = new MyTagView();
+	myTag.el.textContent = "這是新增的標籤。";
+	$('#msg').html(myTag.el);
+});
+
+
+List 5-18
+<script id="myview-template">
+	<div style="border:1px solid #ccc; padding:0px 20px;">
+	<p style="font-size:18pt;"><%= title %></p>
+	<hr size="1" color="#ddd">
+	<p style="font-size:14pt;"><%= content %></p>
+	</div>
+ </script>
+
+<body>
+	<h1>Backbone.js</h1>
+	<div id="msg"></div>
+</body>
+
+
+List 5-19
+$(function() {
+	var MyView =  Backbone.View.extend({
+		el:'#msg',
+		tmpl:_.template($("#myview-template").html()),
+		
+		render:function () {
+			this.$el.html(this.tmpl({
+				'title':'山田太郎',
+				'content':'任職○○銀行<br>e-mail: taro@yamada'
+			}));
+			return this;
+		}
+	});
+
+	var myView = new MyView();
+	myView.render();
+});
+
+
+List 5-20
+<body>
+	<h1>Backbone.js</h1>
+	<p id="msg"></p>
+	<div>
+		<input type="text" id="input1">
+		<input type="button" id="btn1">
+	</div>
+</body>
+
+
+List 5-21
+$(function() {
+	// 顯示訊息用的View
+	var MyView = Backbone.View.extend({
+		el:'#msg',
+
+		initialize:function() {
+			this.$title = $('#title');
+			this.$item1 = $('#item1');
+			this.$item2 = $('#item2');
+			this.$item3 = $('#item3');
+		},
+
+		render: function() {
+			this.$title.text('※使用作業系統平台')
+			this.$item1.text('Windows');
+			this.$item2.text('macOS');
+			this.$item3.text('Linux');
+			return this;
+		}
+	});
+
+	var myView = new MyView();
+	myView.render();
+
+	// 輸入欄位的View
+	var InputView = Backbone.View.extend({
+		el:'#input1',
+
+		events:{
+			'keypress':'onkeydown'
+		},
+
+		onkeydown(event) {
+			this.value = this.$el.val();
+		}
+	});
+
+	var inputView = new InputView();
+
+	// 按鈕的View
+	var ButtonView =  Backbone.View.extend({
+		el:'#btn1',
+		input:null,
+		msg:null,
+
+		initialize:function(obj){
+			this.input = obj.input;
+			this.msg = obj.msg;
+			this.$el.val('click');
+		},
+
+		events:{
+			'click':'onclick'
+		},
+
+		onclick(event){
+			var str = this.input.$el.val();
+			this.msg.$el.text('typed: ' + str);
+		}
+	});
+
+	var buttonView = new ButtonView({
+		input:inputView, msg:myView
+	});
+
+});
+
+
+List 5-22
+CREATE DATABASE backbone_db;
+USE backbone_db;
+
+
+List 5-23
+CREATE TABLE `mydata` (
+	`id` int(11) NOT NULL,
+	`name` varchar(255) NOT NULL,
+	`mail` varchar(255) DEFAULT NULL,
+	`tel` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `mydata` ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `mydata`
+	MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+
+List 5-24
+INSERT INTO `mydata` (`name`, `mail`, `tel`) VALUES
+	('taro', 'taro@yamada', '090-999-999'),
+	('hanako', 'hanako@flower', '080-888-888'),
+	('sachiko', 'sachiko@happy', '070-777-777');
+
+
+List 5-25
+<?php
+ini_set('display_errors', 'Off');  // 隱藏錯誤訊息
+$method = $_SERVER['REQUEST_METHOD'];
+$request = explode('/', trim($_SERVER['PATH_INFO'],'/'));
+$input = json_decode(file_get_contents('php://input'),true);
+
+// 設定資料庫連線網址、帳號、密碼和使用的資料庫名稱
+$link = mysqli_connect('localhost', 'root', '', 'backbone_db');
+mysqli_set_charset($link,'utf8');
+
+$table = preg_replace('/[^a-z0-9_]+/i','',array_shift($request));
+$key = array_shift($request)+0;
+
+$columns = preg_replace('/[^a-z0-9_]+/i','',array_keys($input));
+$values = array_map(function ($value) use ($link) {
+	if ($value===null) return null;
+	return mysqli_real_escape_string($link,(string)$value);
+},array_values($input));
+
+$set = '';
+for ($i=0;$i<count($columns);$i++) {
+	$set.=($i>0?',':'').'`'.$columns[$i].'`=';
+	$set.=($values[$i]===null?'NULL':'"'.$values[$i].'"');
+}
+
+switch ($method) {
+	case 'GET':
+	$sql = "select * from `$table`".($key?" WHERE id=$key":'');
+	break;
+	case 'PUT':
+	$sql = "update `$table` set $set where id=$key";
+	break;
+	case 'POST':
+	$sql = "insert into `$table` set $set";
+	break;
+	case 'DELETE':
+	$sql = "delete `$table` where id=$key";
+	break;
+}
+ 
+$result = mysqli_query($link,$sql);
+ 
+if (!$result) {
+	http_response_code(404);
+	die(mysqli_error());
+}
+ 
+if ($method == 'GET') {
+	if (!$key) echo '[';
+	for ($i=0;$i<mysqli_num_rows($result);$i++) {
+		echo ($i>0?',':'').json_encode(mysqli_fetch_object($result));
+	}
+	if (!$key) echo ']';
+} elseif ($method == 'POST') {
+	echo mysqli_insert_id($link);
+} else {
+	echo mysqli_affected_rows($link);
+}
+ 
+mysqli_close($link);
+?>
+
+
+List 5-26
+var MyDataModel = Backbone.Model.extend({
+});
+
+var myDataModel = new MyDataModel();
+
+
+List 5-27
+var MyDataCollection = Backbone.Collection.extend({
+	model: MyDataModel,
+	url: 'db.php/mydata',
+});
+
+
+List 5-28
+th {
+	border: 1px solid #aaa;
+	color: white;
+	background: darkgray;
+	padding: 0px 10px;
+}
+td {
+	border: 1px solid #aaa;
+	padding: 0px 10px;
+}
+
+
+List 5-29
+<script id="mydata_tmpl">
+<tr>
+	<td><%=name %></td>
+	<td><%=mail %></td>
+	<td><%=tel %></td>
+</tr>
+</script>
+
+<body>
+	<h1>Backbone.js</h1>
+	<table>
+		<thead>
+		<tr>
+			<th>NAME</th>
+			<th>MAIL</th>
+			<th>TEL</th>
+		</tr>
+		</thead>
+		<tbody  id="list"></tbody>
+	</teble>
+</body>
+
+
+List 5-30
+$(function() {
+
+	// 建立Model
+	var MyDataModel = Backbone.Model.extend({
+	});
+	var myDataModel = new MyDataModel();
+
+	// 建立Collection
+	var MyDataCollection = Backbone.Collection.extend(
+		model: MyDataModel,
+		url: 'db.php/mydata',
+	);
+	var myDataCollection = new MyDataCollection();
+
+	// fetch資料
+	myDataCollection.fetch();
+
+	// 建立View
+	var MyDataItemView = Backbone.View.extend({
+
+		initialize(){
+			this.listenTo(myDataCollection, 'add', this.render); // add事件
+		},
+
+		tmpl:_.template($("#mydata_tmpl").html()), // 準備範本
+
+		render(item) {
+			var data = item.attributes;
+			$('#list').append(this.tmpl(data));
+			return this;
+		}
+	});
+
+	var myDataItemView = new MyDataItemView({model:myDataCollection});
+		
+});
+
+
+List 5-31
+<body>
+	<h1>Backbone.js</h1>
+	<div id="form">
+		<div><input type="text" id="my_id"></div>
+		<div><input type="button" id="findBtn" value="Get"></div>
+	</div>
+	<hr>
+	<table>
+		<thead>
+		<tr>
+			<th>NAME</th>
+			<th>MAIL</th>
+			<th>TEL</th>
+		</tr>
+		</thead>
+		<tbody  id="list"></tbody>
+	</teble>
+</body>
+
+
+List 5-32
+function onclickFind(event){
+	var id = $('#my_id').val();
+	var result = myDataCollection.get(id);
+	var data = result.attributes;
+	$('#list').empty();
+	myDataItemView.render(result);
+}
+
+
+List 5-33
+<body>
+	<h1>Backbone.js</h1>
+	<div id="form">
+		<div><input type="text" id="my_id"></div>
+		<div><input type="button" id="findBtn" value="Get"></div>
+	</div>
+	<hr>
+	<div id="form">
+		<div><input type="text" id="name" name="name"></div>
+		<div><input type="text" id="mail" name="mail"></div>
+		<div><input type="text" id="tel" name="tel"></div>
+		<div><input type="button" id="createBtn" value="Create"></div>
+	</div>
+	<hr>
+	<table>
+		<thead>
+		<tr>
+			<th>NAME</th>
+			<th>MAIL</th>
+			<th>TEL</th>
+		</tr>
+		</thead>
+		<tbody  id="list"></tbody>
+	</teble>
+</body>
+
+
+List 5-34
+function onclickCreate(event){
+
+	myDataCollection.create(
+		{
+			'name': $('#name').val(),
+			'mail': $('#mail').val(),
+			'tel': $('#tel').val()
+		},{
+			success: function(collection, result, options) {
+				$('#name').val('');
+				$('#mail').val('');
+				$('#tel').val('');
+			}
+		}
+	);
+}
+
+$('#createBtn').bind('click', onclickCreate);

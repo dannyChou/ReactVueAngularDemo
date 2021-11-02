@@ -1,0 +1,492 @@
+﻿
+List 2-1
+<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+
+
+List 2-2
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+
+List 2-3
+npm install jquery
+
+
+List 2-4
+{
+	"name": "jquery",
+	"title": "jQuery",
+	"description": "JavaScript library for DOM operations",
+	"version": "3.2.1",
+	"main": "jquery.js",
+	"homepage": "https://jquery.com",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/jquery/jquery.git"
+	},
+	"dependencies": {
+		"jquery": "3.2.1"
+	},
+	"readme": "ERROR: No README data found!"
+}
+
+
+List 2-5
+{
+	"name": "jquery",
+	"main": "jquery.js",
+	"license": "MIT",
+	"ignore": [
+		"package.json"
+	],
+	"dependencies": {
+		"jquery": "3.2.1"
+	}
+}
+
+
+List 2-6――index.html
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="main.js"></script>
+	<link rel="stylesheet" href="style.css"></link>
+</head>
+<body>
+	<h1>jQuery page</h1>
+	<p id="msg">wait...</p>
+</body>
+</html>
+
+
+List 2-7――style.css
+body {
+	padding: 10pt;
+	font-size: 18pt;
+	color: #999;
+}
+
+h1 {
+	color: #999;
+	font-size: 28pt;
+}
+
+
+List 2-8――main.js
+window.onload = function(){
+	document.querySelector('#msg').textContent = '此為未使用 jQuery 的畫面。';
+}
+
+
+List 2-9
+$(function() {
+	$('#msg').text('此為利用 jQuery 顯示的文字。');
+});
+
+
+List 2-10
+$(function() {
+	$('#msg').html('這是<a href="http://google.com">Link</a>的範例。');
+});
+
+
+List 2-11
+<body>
+	<h1>jQuery page</h1>
+	<p id="msg">input text...</p>
+	<div>
+		<input type="text" id="text1" />
+		<button id="btn1">Click</button>
+	</div>
+</body>
+
+
+List 2-12
+$(function() {
+	$('#btn1').click(function(){
+		var str = $('#text1').val();
+		$('#msg').text('you typed: ' + str + '.');
+	});
+});
+
+
+List 2-13
+window.onload = function(){
+	document.querySelector('#btn1').addEventListener('click', function(){
+		var str = document.querySelector('#text1').value;
+		document.querySelector('#msg').textContent = 'you typed: ' + str + '.'
+	});
+}
+
+
+Lost 2-14――index.html（僅<body>１部分）
+<body>
+	<h1>jQuery page</h1>
+	<p id="msg">input text...</p>
+	<div>
+		<input type="radio" name="radio1" id="r1" value="male">
+		<label for="r1">male</label>
+	</div>
+	<div>
+		<input type="radio" name="radio1" id="r2" value="female">
+		<label for="r2">female</label>
+	</div>
+	<button id="btn1">Click</button>
+</body>
+
+
+List 2-15――main.js
+$(function() {
+	$('#btn1').click(function(){
+		var val = $('input[name=radio1]:checked').val();
+		$('#msg').text('checked: ' + val);
+	});
+});
+
+
+List 2-16
+window.onload = function(){
+	document.querySelector('#btn1').addEventListener('click',function(){
+		var radios = document.getElementsByName('radio1');
+		var str = '';
+		for(var i = 0;i < radios.length;i++){
+			if (radios[i].checked){
+				str = radios[i].value;
+			}
+		}
+		document.querySelector('#msg').textContent = 'you typed: ' + str + '.'
+	});
+}
+
+
+List 2-17――index.html（僅<body>部分）
+<body>
+	<h1>jQuery page</h1>
+	<p id="msg">input text...</p>
+	<div>
+		<select id="sel1" size="5" multiple>
+			<option>Windows</option>
+			<option>macOS</option>
+			<option>Linux</option>
+			<option>android</option>
+			<option>iOS</option>
+		</select>
+		<button id="btn1">Click</button>
+	</div>
+</body>
+
+
+List 2-18――main.js
+$(function() {
+	$('#btn1').click(function(){
+		var msg = 'selected: ';
+		$("#sel1 option:selected").each(function(){
+			msg += $(this).val() + " ";
+		});
+		$('#msg').text(msg);
+	});
+});
+
+
+List 2-19
+window.onload = function(){
+	document.querySelector('#btn1').addEventListener('click',function(){
+		var sel = document.querySelector('#sel1');
+		var opts = sel.getElementsByTagName('option');
+		var msg = 'selected: ';
+		for(var i = 0;i < opts.length;i++){
+			if (opts[i].selected){
+				msg += opts[i].value + ' ';
+			}
+		}
+		document.querySelector('#msg').textContent = msg;
+	});
+}
+
+
+List 2-20――index.html
+<body>
+	<h1>jQuery page</h1>
+	<ul>
+		<li>此為開頭的項目。</li>
+		<li>此為正中間的項目。</li>
+		<li>此為結尾的項目。</li>
+	</ul>
+	<button id="btn1">Click</button>
+</body>
+
+
+List 2-21――main.js
+$(function() {
+	$('#btn1').click(function(){
+		$("li").css('color', 'white').css('background', 'red');
+	});
+});
+
+
+List 2-22――style.css
+.A {
+	color: green;
+	background: white
+}
+.B {
+	color: white;
+	background: blue;
+}
+
+
+List 2-23――index.html
+<body>
+	<h1>jQuery page</h1>
+	<ul>
+		<li name="a">此為開頭的項目。</li>
+		<li name="b">此為第2個項目。</li>
+		<li name="a">此為中間的項目。</li>
+		<li name="b">此為最後的項目。</li>
+	</ul>
+	<button id="btn1">Click</button>
+</body>
+
+
+List 2-24――main.js
+var flg = false;
+
+$(function() {
+	$('#btn1').click(function(){
+		if (flg){
+			$("li[name=a]").addClass('A').removeClass('B');
+			$("li[name=b]").addClass('B').removeClass('A');
+
+		} else {
+			$("li[name=a]").addClass('B').removeClass('A');
+			$("li[name=b]").addClass('A').removeClass('B');
+		}
+		flg = !flg;
+	});
+});
+
+
+List 2-25――style.css
+p {
+	margin: 5px;
+	border: 2px solid lightgray;
+}
+
+
+List 2-26――index.html
+<body>
+	<h1>jQuery page</h1>
+	<div id="msg"></div>
+	<input type="text" id="text1" />
+	<button id="btn1">Click</button>
+</body>
+
+
+List 2-27――main.js
+$(function() {
+	$('#btn1').click(function(){
+		var obj = $('<p>' + $('#text1').val() + '</p>');
+		$('#msg').append(obj);
+	});
+});
+
+
+List 2-28――style.css
+p {
+	margin: 5px;
+	border: 2px solid lightgray;
+}
+div {
+	margin: 5px;
+	border: 1px solid red;
+}
+
+
+List 2-29――index.html
+<body>
+	<h1>jQuery page</h1>
+	<p name="msg">One.</p>
+	<p name="msg">Two.</p>
+	<p name="msg">Three.</p>
+	<button id="btn1">Click</button>
+</body>
+
+
+List 2-30――main.js
+$(function() {
+	$('#btn1').click(function(){
+		$('p[name=msg]').wrap('<div></div>');
+	});
+});
+
+
+List 2-31――main.js
+$(function() {
+	$('#btn1').click(function(){
+		$('p[name=msg]').wrapAll('<div></div>');
+	});
+});
+
+
+List 2-32――index.html
+<body>
+	<h1>jQuery page</h1>
+	<p id="msg">message...</p>
+	<button id="btn1">Click</button>
+</body>
+
+
+List 2-33――main.js
+$(function() {
+	$('#btn1').click(function(){
+		$('#msg').load('data.txt');
+	});
+});
+
+
+List 2-34
+$(function() {
+	$('#btn1').click(function(){
+		$.get('data.txt', function(response, status, xhr){
+			var ol = $('<ol></ol>');
+			var arr = response.split('\n');
+			for(var item in arr){
+				ol.append('<li>' + arr[item] + '</li>');
+			}
+			$('#msg').append(ol);
+		});
+	});
+});
+
+
+List 2-35――data.php
+<?php
+$data =array(
+	array('name'=>'Taro', 'mail'=>'taro@yamada', 'tel'=>'090-999-999'),
+	array('name'=>'Hanako', 'mail'=>'hanako@flower', 'tel'=>'080-888-888'),
+	array('name'=>'Sachiko', 'mail'=>'sachiko@happy', 'tel'=>'070-777-777'),
+);
+ 
+$id = $_GET['id'] * 1;
+if ($id < count($data)){
+	$result = $data[$id];
+} else {
+	$result = $data[0];
+}
+header('Content-type:application/json; charset=utf8');
+echo json_encode($result);
+?>
+
+
+List 2-36――index.html
+<body>
+	<h1>jQuery page</h1>
+	<p id="msg">message...</p>
+	<input type="text" id="text1">
+	<button id="btn1">Click</button>
+</body>
+
+
+List 2-37――main.js
+$(function() {
+	$('#btn1').click(function(){
+		var id = $('#text1').val();
+		$.getJSON('data.php', {'id':id}, function(response, status, xhr){
+			var ol = $('<ul></ul>');
+			ol.append('<li>姓名：' + response.name + '</li>');
+			ol.append('<li>電郵信箱：' + response.mail + '</li>');
+			ol.append('<li>電話號碼：' + response.tel + '</li>');
+			$('#msg').empty().append(ol);
+		});
+	});
+});
+
+
+List 2-38――index.html
+<body>
+	<h1>jQuery page</h1>
+	<div id="frame">
+		<img id="image" src="image1.jpg">
+	</div>
+	<div><button id="btn1">Click</button></div>
+</body>
+
+
+List 2-39――main.js
+$(function() {
+	var flg = false;
+	
+	$('#btn1').click(function(){
+		if (flg){
+			$('#image').show(500);
+		} else {
+			$('#image').hide(500);
+		}
+		flg = !flg;
+	});
+});
+
+
+List 2-40
+$(function() {
+	$('#btn1').click(function(){
+		$('#image').toggle(500);
+	});
+});
+
+
+List 2-41――index.html
+<body>
+	<h1>jQuery page</h1>
+	<div>
+		<img id="image1" src="image1.jpg">
+	</div>
+	<div>
+		<img id="image2" src="image1.jpg">
+	</div>
+	<div><button id="btn1">Click</button></div>
+</body>
+
+
+List 2-42――main.js
+$(function() {
+	$('#btn1').click(function(){
+		$('#image2').toggle(500, function(){
+			$('#image1').toggle(500);
+		});
+	});
+});
+
+
+List 2-43――index.html
+<body>
+	<h1>jQuery page</h1>
+	<div id="frame">
+		<img id="image1" src="image1.jpg">
+	</div>
+	<div><button id="btn1">Click</button></div>
+</body>
+
+
+List 2-44――main.js
+$(function() {
+	$('#image1').click(function(){
+		$('#image1').fadeOut(500);
+	});
+	$('#btn1').click(function(){
+		$('#image1').fadeIn(500);
+	});
+});
+
+
+List 2-45
+$(function() {
+	$('#image1').click(function(){
+		$('#frame').slideUp(500);
+	});
+	$('#btn1').click(function(){
+		$('#frame').slideDown(500);
+	});
+});

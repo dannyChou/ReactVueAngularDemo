@@ -1,0 +1,135 @@
+﻿
+List 9-1
+{
+	"name": "應用程式名稱",
+	"version": "版本編號",
+	"description": "說明敘述",
+	"main": "主檔案",
+	"scripts": {
+		… script資訊 …
+	},
+	"dependencies": {
+		… 指定所需的相關套件 …
+	},
+	"keywords": [ 關鍵字 ],
+	"author": "作者",
+	"license": "授權形式"
+}
+
+
+List 9-2
+"dependencies": {
+	"angular": "^1.5.8"
+}
+
+
+List 9-3
+{
+	"name": "應用程式名稱",
+	"authors": [
+		"作者名稱"
+	],
+	"description": "",
+	"main": "",
+	"license": "MIT",
+	"homepage": "",
+	"private": true,
+	"ignore": [
+		"**/.*",
+		"node_modules",
+		"bower_components",
+		"test",
+		"tests"
+	],
+	"dependencies": {
+		… 如果有已安裝的套件將寫於此處 …
+	}
+}
+
+
+List 9-4
+"dependencies": {
+	"jquery": "^3.1.0"
+}
+List 9-5――index.html
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Webpack</title>
+	<script src="./main.js"></script>
+	<link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+	<h1>Sample Page</h1>
+	<p id="msg">this is sample content.</p>
+</body>
+</html>
+
+
+List 9-6――style.css
+body {
+	color: #aaa;
+	padding: 5px 20px;
+	line-height: 150%;
+}
+h1 {
+	font-size: 24pt;
+	color: red;
+}
+p {
+	font-size: 18pt;
+}
+
+List 9-7――main.js
+var obj = require("./other.js");
+
+console.log('main.js loaded...');
+obj.otherFunc();
+
+
+List 9-8――other.js
+module.exports.otherFunc = function() {
+	console.log("other.js loaded...");
+	window.onload = function(){
+		document.querySelector('#msg').textContent 
+			= '這是由Other.js所更新的顯示內容。';
+	}
+}
+
+
+List 9-9
+module.exports = {
+	entry: "./main.js",
+	output: { 
+		path: "./",
+		filename: "bundle.js"
+	}
+};
+
+
+List 9-10――main.js
+var obj = require("./other.js");
+require("./style.css");
+
+console.log('main.js loaded...');
+obj.otherFunc();
+
+
+List 9-11――webpack.config.js
+module.exports = {
+	entry: "./main.js",
+	output: { 
+		path: "./",
+		filename: "bundle.js"
+	},
+	module: {
+		loaders: [
+			{
+				test: /\.css/,
+				loaders: ["style-loader", "css-loader"]  
+			}
+		]
+	}
+};

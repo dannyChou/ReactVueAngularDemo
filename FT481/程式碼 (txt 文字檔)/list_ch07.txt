@@ -1,0 +1,546 @@
+﻿
+List 7-1
+<script src="react.js"></script>
+<script src="react-dom.js"></script>
+<script src="browser.min.js"></script>
+
+
+List 7-2
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.1/react.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.1/react-dom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+
+
+List 7-3
+{
+	"name": "react",
+	"description": "React is a JavaScript library for building user interfaces.",
+	"version": "15.2.1",
+	"homepage": "https://facebook.github.io/react/",
+	"license": "BSD-3-Clause",
+	"main": "react.js",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/facebook/react.git"
+	},
+	"dependencies": {
+	"react": "^15.2.1",
+ 	"react-dom": "^15.2.1"
+	 },
+	"browserify": {
+		"transform": [
+			"loose-envify"
+		]
+	}
+ }
+
+
+List 7-4
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>React Tutorial</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.1/react.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.1/react-dom.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+
+	<link rel="stylesheet" href="style.css"></link>
+</head>
+<body>
+	<h1>ReactJS</h1>
+	<div id="msg">wait...</div>
+	<script type="text/babel" src="main.js"></script>
+</body>
+</html>
+
+
+List 7-5
+body {
+	color: #999;
+	padding: 5px 20px;
+	line-height: 125%;
+}
+h1 {
+	font-size: 28pt;
+}
+p {
+	font-size: 18pt;
+}
+
+#msg {
+	padding: 5px 10px;
+	color: blue;
+	border: 1px solid lightgray;
+}
+
+
+List 7-6
+var MyComponent = React.createClass({
+	displayName: 'my component',
+	render: function() {
+		return (
+			<p>此為React的範例程式。</p>
+		);
+	}
+});
+
+ReactDOM.render(
+	<MyComponent/>,
+	document.getElementById('msg')
+);
+
+
+List 7-7
+var MyComponent = React.createClass({
+	displayName: 'my comp',
+	render: function() {
+		return (
+			React.createElement('p', {}, '此為不使用JSX的範例。')
+		);
+	}
+});
+
+ReactDOM.render(
+	React.createElement(MyComponent, {},null),
+	document.getElementById('msg')
+);
+
+
+List 7-8
+var MyComponent = React.createClass({
+	displayName: 'my component',
+	render: function() {
+		return (
+		<p>{this.props.content}</p>
+		);
+	}
+});
+
+ReactDOM.render(
+	<MyComponent content="這是content的內容值。" />,
+	document.getElementById('msg')
+);
+
+
+List 7-9
+var MyComponent = React.createClass({
+	displayName: 'my component',
+	render: function() {
+		return (
+		<p style={{color:this.props.styleColor, 
+			background:this.props.styleBg,
+			padding:this.props.stylePd}}>
+				{this.props.content}
+			</p>
+		);
+	}
+});
+
+ReactDOM.render(
+	<MyComponent styleColor="white" styleBg="red" 
+		stylePd="10px" content="這是內容文字。">
+		this is MyItem Component.
+	</MyComponent>,
+	document.getElementById('msg')
+);
+
+
+List 7-10
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>React App</title>
+</head>
+<body>
+	<div id="root"></div>
+</body>
+</html>
+
+
+リスト7-11
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import './index.css';
+
+ReactDOM.render(
+	<App />,
+	document.getElementById('root')
+);
+
+
+リスト7-12
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+
+class App extends Component {
+	render() {
+		return (
+		<div className="App">
+			<div className="App-header">
+				<img src={logo} className="App-logo" alt="logo" />
+				<h2>Welcome to React</h2>
+			</div>
+			<p className="App-intro">
+			To get started, edit <code>src/App.js</code> and save to reload.
+			</p>
+		</div>
+		);
+	}
+}
+
+export default App;
+
+
+List 7-13
+var MyTitle = React.createClass({
+	displayName: 'my title',
+
+	render: function() {
+		return (
+			<h2>{this.props.title}</h2>
+		);
+	}
+});
+
+var MyItem = React.createClass({
+	displayName: 'my item',
+
+	render: function() {
+		return (
+			<p>{this.props.content}</p>
+		);
+	}
+});
+
+var MyComponent = React.createClass({
+	displayName: 'my component',
+	render: function() {
+		return (
+		<div>
+			<MyTitle title={this.props.title} />
+			<MyItem content={this.props.content} />
+		</div>
+		);
+	}
+});
+
+ReactDOM.render(
+	<MyComponent title="MyTitle Component" content="this is MyItem Component." />,
+	document.getElementById('msg')
+);
+
+
+List 7-14
+var MyComponent = React.createClass({
+	displayName: 'my component',
+
+	handleOnClick: function(event) {
+		alert('已點選！');
+	},
+
+	render: function() {
+		return (
+		<div>
+			<p>{this.props.msg}</p>
+			<input type="button" value="click" onClick={this.handleOnClick} />
+		</div>
+		);
+	}
+});
+
+ReactDOM.render(
+	<MyComponent msg="請點選下方按鈕。" />,
+	document.getElementById('msg')
+);
+
+
+List 7-15
+var MyComponent = React.createClass({
+	displayName: 'my component',
+
+	getInitialState: function () {
+		return { msg: '請輸入名字：' };
+	},
+
+	handleOnChange: function(event) {
+		this.inputValue = event.target.value;
+	},
+	handleOnClick: function(event) {
+		this.setState({
+			msg: '您好！' + this.inputValue + '先生／小姐！'
+		});
+	},
+
+	render: function() {
+		return (
+		<div>
+			<p>{this.state.msg}</p>
+			<input type="text" onChange={this.handleOnChange} />
+			<input type="button" value="click" onClick={this.handleOnClick} />
+		</div>
+		);
+	}
+});
+
+ReactDOM.render(
+	<MyComponent />,
+	document.getElementById('msg')
+);
+
+
+List 7-16
+var MyComponent = React.createClass({
+	displayName: 'my component',
+	checkValue: false,
+	radioValue: '(未選取)',
+
+	getInitialState: function () {
+		return { msg: '' };
+	},
+
+	handleOnChangeCb: function(event) {
+		this.checkValue = event.target.checked;
+	},
+	handleOnChangeRb: function(event) {
+		this.radioValue = event.target.value;
+	},
+
+	handleOnClick: function(event) {
+		this.setState({
+			msg: '選取狀態：' + this.checkValue + ', ' + this.radioValue
+		});
+	},
+
+	render: function() {
+		return (
+		<div>
+			<p>{this.state.msg}</p>
+			<div><input type="checkbox" onChange={this.handleOnChangeCb} id="ck1" />
+				<label htmlFor="ck1">Check Box</label></div>
+			<div><input type="radio" onChange={this.handleOnChangeRb} value="A" id="r1" name="radio" />
+				<label htmlFor="r1">radio A</label></div>
+			<div><input type="radio" onChange={this.handleOnChangeRb} value="B" id="r2" name="radio" />
+				<label htmlFor="r2">radio B</label></div>
+			<div><input type="button" value="click" onClick={this.handleOnClick} /></div>
+		</div>
+		);
+	}
+});
+
+ReactDOM.render(
+	<MyComponent />,
+	document.getElementById('msg')
+);
+
+
+List 7-17
+var MyComponent = React.createClass({
+	displayName: 'my component',
+	sel1Value: 'Windows',
+	sel2Value:[],
+
+	getInitialState: function () {
+		return { msg: '' };
+	},
+
+	handleOnChangeSel1: function(event) {
+		this.sel1Value = event.target.value;
+	},
+	handleOnChangeSel2: function(event) {
+		var options = event.target.options;
+		var values = [];
+		for (var i = 0, l = options.length; i < l; i++) {
+			if (options[i].selected) {
+				values.push(options[i].value);
+			}
+		}
+		this.sel2Value = values;
+	},
+
+	handleOnClick: function(event) {
+		this.setState({
+			msg: '狀態： ' + this.sel1Value + ' [' + this.sel2Value + ']'
+		});
+	},
+
+	render: function() {
+		return (
+		<div>
+			<p>{this.state.msg}</p>
+			<div><select onChange={this.handleOnChangeSel1}>
+				<option>Windows</option>
+				<option>macOS</option>
+				<option>Linux</option>
+			</select></div>
+			<div><select multiple size="3" onChange={this.handleOnChangeSel2}>
+				<option>Android</option>
+				<option>iOS</option>
+				<option>WindowsPhone</option>
+			</select></div>
+			<div><input type="button" value="click" onClick={this.handleOnClick} /></div>
+		</div>
+		);
+	}
+});
+
+ReactDOM.render(
+	<MyComponent />,
+	document.getElementById('msg')
+);
+
+
+List 7-18
+var MyComponent = React.createClass({
+	getInitialState: function() {
+		return {
+			data: ['first item.']
+		};
+	},
+
+	handleOnChange: function(event) {
+		this.inputValue = event.target.value;
+	},
+
+	handleAddItem: function() {
+		var arr= this.state.data.concat(this.inputValue);
+		this.setState({data: arr});
+	},
+
+	render: function() {
+		var items = this.state.data.map(function(item, i) {
+			return (
+				<option key={'key_' + i}>{i + ':' + item}</option>
+			);
+		}.bind(this));
+		return (
+		<div>
+			<select size="5">{items}</select>
+			<div>
+			<input type="text" onChange={this.handleOnChange} />
+			<input type="button" value="Click" onClick={this.handleAddItem} />
+			</div>
+		</div>
+		);
+	}
+});
+
+ReactDOM.render(
+	<MyComponent />,
+	document.getElementById('msg')
+);
+
+
+List 7-19
+var MyComponent = React.createClass({
+	getInitialState: function() {
+		return {
+			data: ['first item.']
+		};
+	},
+
+	handleOnChange: function(event) {
+		this.inputValue = event.target.value;
+	},
+
+	handleAddItem: function() {
+		var newData = this.state.data.concat(this.inputValue);
+		this.setState({data: newData});
+	},
+
+	handleRemoveItem: function(i) {
+		var arr = this.state.data;
+		arr.splice(i, 1);
+		this.setState({data: arr});
+	},
+
+	render: function() {
+		var items = this.state.data.map(function(item, i) {
+			return (
+				<li key={'key_' + i} onClick={this.handleRemoveItem.bind(this, i)}>
+				{item}
+				</li>
+			);
+		}.bind(this));
+		return (
+		<div>
+			<ol>{items}</ol>
+			<div>
+			<input type="text" onChange={this.handleOnChange} />
+			<input type="button" value="Click" onClick={this.handleAddItem} />
+			</div>
+		</div>
+		);
+	}
+});
+
+ReactDOM.render(
+	<MyComponent />,
+	document.getElementById('msg')
+);
+
+
+List 7-20
+var MyComponent = React.createClass({
+	displayName: 'my component',
+
+	getInitialState: function () {
+		return { msg: '請輸入名字：' };
+	},
+
+	handleOnClick: function(event) {
+		var in_str = ReactDOM.findDOMNode(this.refs.input1).value;
+		this.setState({
+			msg: '您好！' + in_str + '先生／小姐！'
+		});
+	},
+
+	render: function() {
+		return (
+		<div>
+			<p>{this.state.msg}</p>
+			<input type="text" ref="input1" />
+			<input type="button" value="click" onClick={this.handleOnClick} />
+		</div>
+		);
+	}
+});
+
+ReactDOM.render(
+	<MyComponent />,
+	document.getElementById('msg')
+);
+
+
+List 7-21
+class ToggleButton extends React.Component {
+	constructor() {
+		super();
+		this.state = {
+			toggle: false
+		};
+		this.handleClick = this.handleClick.bind(this);
+	}
+
+	handleClick() {
+		this.setState({toggle: !this.state.toggle});
+	}
+
+	render() {
+		const msg = this.state.toggle ? this.props.true_msg : this.props.false_msg;
+		return (
+			<div onClick={this.handleClick}>
+				狀態： {msg}
+			</div>
+		);
+	}
+}
+
+ReactDOM.render(
+	<ToggleButton true_msg="良好！" false_msg="不佳..." />,
+	document.getElementById('msg')
+);

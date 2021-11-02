@@ -1,0 +1,425 @@
+﻿List 6-1
+(function(global) {
+	var ngVer = '@2.0.0-rc.4';
+	var routerVer = '@3.0.0-beta.1';
+	var formsVer = '@0.2.0';
+	var routerDeprecatedVer = '@2.0.0-rc.2'; 
+
+	var  map = {
+		'app': 'app',
+
+		'@angular': 'https://unpkg.com/@angular',
+		'@angular/router': 'https://unpkg.com/@angular/router' + routerVer,
+		'@angular/forms': 'https://unpkg.com/@angular/forms' + formsVer,
+		'@angular/router-deprecated': 'https://unpkg.com/@angular/router-deprecated' + 
+			routerDeprecatedVer,
+		'angular2-in-memory-web-api': 'https://unpkg.com/angular2-in-memory-web-api',
+		'rxjs': 'https://unpkg.com/rxjs@5.0.0-beta.6',
+		'ts': 'https://unpkg.com/plugin-typescript@4.0.10/lib/plugin.js',
+		'typescript': 'https://unpkg.com/typescript@1.9.0-dev.20160409/lib/typescript.js',
+	};
+
+	var packages = {
+		'app': { main: 'main.ts',  defaultExtension: 'ts' },
+		'rxjs': { defaultExtension: 'js' },
+		'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
+	};
+
+	var ngPackageNames = [
+		'common',
+		'compiler',
+		'core',
+		'http',
+		'platform-browser',
+		'platform-browser-dynamic',
+		'upgrade',
+	];
+
+	ngPackageNames.forEach(function(pkgName) {
+		map['@angular/'+pkgName] = 'https://unpkg.com/@angular/' + 
+		pkgName + ngVer;
+	});
+
+	ngPackageNames.forEach(function(pkgName) {
+		packages['@angular/'+pkgName] = { main: '/bundles/' + pkgName + '.umd.js', 
+		defaultExtension: 'js' };
+	});
+
+	packages['@angular/router'] = { main: 'index.js', defaultExtension: 'js' };
+	packages['@angular/forms'] = { main: 'index.js', defaultExtension: 'js' };
+	packages['@angular/router-deprecated'] = { main: '/bundles/router-deprecated' + 
+		'.umd.js', defaultExtension: 'js' };
+
+	var config = {
+		transpiler: 'ts',
+		typescriptOptions: {
+			tsconfig: true
+		},
+		meta: {
+			'typescript': {
+				"exports": "ts"
+			}
+		},
+		map: map,
+		packages: packages
+	};
+
+	System.config(config);
+
+})(this);
+
+
+List 6-2
+{
+	"compilerOptions": {
+		"target": "es5",
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"sourceMap": true,
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"removeComments": false,
+		"noImplicitAny": true,
+		"suppressImplicitAnyIndexErrors": true
+	}
+}
+
+
+List 6-3
+<script src="https://unpkg.com/core-js/client/shim.min.js"></script>
+<script src="https://unpkg.com/zone.js@0.6.12?main=browser"></script>
+<script src="https://unpkg.com/reflect-metadata@0.1.3"></script>
+<script src="https://unpkg.com/systemjs@0.19.27/dist/system.src.js"></script>
+<script src="systemjs.config.js"></script>
+
+
+List 6-4
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Angular Web</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="styles.css">
+
+	<script src="https://unpkg.com/core-js/client/shim.min.js"></script>
+	<script src="https://unpkg.com/zone.js@0.6.12?main=browser"></script>
+	<script src="https://unpkg.com/reflect-metadata@0.1.3"></script>
+	<script src="https://unpkg.com/systemjs@0.19.27/dist/system.src.js"></script>
+	
+	<script src="systemjs.config.js"></script>
+	<script>
+		System.import('app').catch(
+			function(err){ console.error(err); }
+		);
+	</script>
+</head>
+
+<body>
+	<my-app>Loading...</my-app>
+</body>
+</html>
+
+
+List 6-5
+body {
+	color: #999;
+	padding: 5px 20px;
+	line-height: 150%;
+}
+h1 {
+	font-size: 24pt;
+}
+p {
+	font-size: 18pt;
+}
+
+
+List 6-6
+import { Component } from '@angular/core';
+
+@Component({
+	selector: 'my-app',
+	template: '<h1>Angular練習範例</h1>'
+})
+
+export class AppComponent {}
+
+
+List 6-7
+import { bootstrap }    from '@angular/platform-browser-dynamic';
+
+import { AppComponent } from './app.component';
+
+bootstrap(AppComponent);
+
+
+List 6-8
+import { Component } from '@angular/core';
+
+@Component({
+	selector: 'my-app',
+	template: `
+		<h1>{{title}}</h1>
+		<p>{{message}}</p>
+	`
+})
+
+export class AppComponent {
+	title = "Hello!";
+	message = "這是Angular的範例程式。"
+}
+
+
+List 6-9
+<body>
+	<my-app>Loading...</my-app>
+	<other-app>Loading...</other-app>
+</body>
+
+
+List 6-10
+import { Component } from '@angular/core';
+
+@Component({
+	selector: 'my-app',
+	template: ’<h1>{{title}}</h1>’
+})
+export class AppComponent {
+	title = "第1個組件";
+}
+
+@Component({
+	selector: 'other-app',
+	template: ’<h1>{{title}}</h1>’
+})
+export class OtherComponent {
+	title = "Second Component!";
+}
+
+
+List 6-11
+import { bootstrap }    from '@angular/platform-browser-dynamic';
+
+import { AppComponent } from './app.component';
+import { OtherComponent } from './app.component';
+
+bootstrap(AppComponent);
+bootstrap(OtherComponent);
+
+
+List 6-12
+<body>
+	<form-app>Loading...</form-app>
+</body>
+
+
+List 6-13
+import { Component } from '@angular/core';
+
+export class MyFormModel {
+	constructor(
+		public msg: string
+	) {}
+}
+
+@Component({
+	selector: 'form-app',
+	template: `
+	<h1>Angular web</h1>
+	<p>{{message}}</p>
+	<form>
+		<input type="text" id="msg" name="msg" [(ngModel)]="model.msg">
+		<input type="button" (click)="onSubmit();" value="click">
+	</form>
+	`
+})
+export class FormComponent {
+	model = new MyFormModel('message...');
+	onSubmit() {
+		this.message = 'you typed: ' + this.model.msg;
+	}
+}
+
+
+List 6-14
+import { bootstrap }    from '@angular/platform-browser-dynamic';
+import { FormComponent } from './app.component';
+
+bootstrap(FormComponent);
+
+
+List 6-15
+import { Component } from '@angular/core';
+
+export class MyFormModel {
+	constructor(
+		public msg: string,
+		public check: boolean,
+		public radio: string
+	) {}
+}
+
+@Component({
+	selector: 'form-app',
+	templateUrl: 'app/template.html'
+})
+export class FormComponent {
+	model = new MyFormModel('message...', false, 'A');
+	onSubmit() {
+		this.message = this.model.msg + ', ' + this.model.check
+			+ ', ' + this.model.radio;
+	}
+}
+
+
+List 6-16
+<h1>Angular web</h1>
+<p>{{message}}</p>
+<form>
+	<div><label for="msg">Message: </label>
+		<input type="text" id="msg" name="msg" 
+		[(ngModel)]="model.msg"></div>
+
+	<div><input type="checkbox" id="check" name="check" 
+		[(ngModel)]="model.check">
+		<label for="check">Check box</label></div>
+
+	<div><input type="radio" id="r1" name="radio" checked 
+		(change)="model.radio='A'">
+		<label for="r1">Radio 1</label>
+		<input type="radio" id="r2" name="radio" 
+		(change)="model.radio='B'">
+		<label for="r2">Radio 2</label></div>
+	<input type="button" (click)="onSubmit();" value="click">
+</form>
+
+
+List 6-17
+import { Component } from '@angular/core';
+
+export class MyFormModel {
+	constructor(
+		public select: string,
+		public select2: string[]
+	) {}
+}
+
+@Component({
+	selector: 'form-app',
+	templateUrl: 'app/template.html'
+})
+export class FormComponent {
+	message = '';
+	model = new MyFormModel('',[]);
+	items = ['北海道', '本洲', '四國', '九州', '沖繩'];
+	items2 = ['Windows', 'macOS', 'Linux', 'Android', 'iOS'];
+	onSubmit() {
+		this.message = this.model.select + ' [' + this.model.select2 + ']';
+	}
+}
+
+
+List 6-18
+<h1>Angular web</h1>
+<p>{{message}}</p>
+<form>
+	<div>
+	<select [(ngModel)]="model.select" [size]="items.length">
+		<option *ngFor="let item of items" [value]="item">{{item}}</option>
+	</select>
+	<select [(ngModel)]="model.select2" [size]="items2.length" multiple>
+		<option *ngFor="let item of items2" [value]="item">{{item}}</option>
+	</select>
+	</div>
+	<input type="button" (click)="onSubmit();" value="click">
+</form>
+
+
+List 6-19
+import { Component } from '@angular/core';
+
+export class MyFormModel {
+	constructor(
+		public color: string,
+		public background: string,
+		public fontSize: number,
+		public padding: number
+	) {}
+}
+
+@Component({
+	selector: 'form-app',
+	templateUrl:'app/template.html'
+})
+export class FormComponent {
+	model = new MyFormModel('blue','white',24,10);
+	message = 'this is sample component.';
+
+	setStyle(){
+		return {
+			'color': this.model.color,
+			'background': this.model.background,
+			'font-size': this.model.fontSize + 'pt',
+			'padding': this.model.padding + 'px'
+		};
+	}
+}
+
+
+List 6-20
+<h1>Angular web</h1>
+<p [ngStyle]="setStyle()">{{message}}</p>
+<hr>
+<input type="text" [(ngModel)]="model.color"><br>
+<input type="text" [(ngModel)]="model.background"><br>
+<input type="text" [(ngModel)]="model.fontSize"><br>
+<input type="text" [(ngModel)]="model.padding"><br>
+
+
+List 6-21
+.classA {
+	color: yellow;
+	background: #993;
+}
+.classB {
+	font-size: 24pt;
+	padding: 20pt;
+}
+
+
+List 6-22
+<h1>Angular web</h1>
+<p [ngClass]="setClass()">{{message}}</p>
+<hr>
+<div><input type="checkbox" id="ck1" [(ngModel)]="model.classA">
+<label for="ck1">class A</label></div>
+<div><input type="checkbox" id="ck2" [(ngModel)]="model.classB">
+<label for="ck2">class B</label></div>
+
+
+List 6-23
+import { Component } from '@angular/core';
+
+export class MyFormModel {
+	constructor(
+		public classA: boolean,
+		public classB: boolean
+	) {}
+}
+
+@Component({
+	selector: 'form-app',
+	templateUrl:'app/template.html'
+})
+export class FormComponent {
+	model = new MyFormModel(false, false);
+	message = 'this is sample component.';
+
+	setClass(){
+		return {
+			'classA': this.model.classA,
+			'classB': this.model.classB
+		};
+	}
+}

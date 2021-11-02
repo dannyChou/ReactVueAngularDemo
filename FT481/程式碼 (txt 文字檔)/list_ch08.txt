@@ -1,0 +1,546 @@
+﻿
+List 8-1
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Aurelia</title>
+	<link rel="stylesheet" href="styles/styles.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body aurelia-app>
+	<script src="jspm_packages/system.js"></script>
+	<script src="config.js"></script>
+	<script>
+		SystemJS.import('aurelia-bootstrapper');
+	</script>
+</body>
+</html>
+
+
+List 8-1_
+<body>
+	<p>*this is Aurelia sample web page...</p>
+	<div aurelia-app></div>
+	<script src="jspm_packages/system.js"></script>
+	<script src="config.js"></script>
+	<script>
+		SystemJS.import('aurelia-bootstrapper');
+	</script>
+</body>
+</html>
+
+
+List 8-2――app.html
+<template>
+	<h1>${message}</h1>
+</template>
+
+
+List 8-3――app.ts
+export class App {
+	message: string = 'Welcome to Aurelia!';
+}
+
+
+List 8-4――app.html
+<template>
+	<h1>${title}</h1>
+	<p>${message}</p>
+	<div><input type="text" value.bind="message"></div>
+</template>
+
+
+List 8-5――app.ts
+export class App {
+	title: string = "Hello Aurelia!";
+	message: string = 'please type here...';
+}
+
+
+List 8-6――app.html
+<template>
+	<h1>${title}</h1>
+	<p>${message}</p>
+	<div>
+		<input type="text" value.bind="input1">
+		<button click.trigger="handleOnClick()">Click</button>
+	</div>
+</template>
+
+
+List 8-7――app.ts
+export class App {
+	title: string = "Hello Aurelia!";
+	input1: string = '';
+	message: string = '請問您的大名？';
+
+	handleOnClick() {
+		this.message = '您好！' + this.input1 + '先生／小姐！';
+	}
+}
+
+
+List 8-8――top.html
+<template>
+	<h1>${title}</h1>
+	<p>${message}</p>
+</template>
+
+
+List 8-9――top.ts
+export class Top {
+	title: string = 'Top page';
+	message: string = 'Welcome to Top page!';
+}
+
+
+List 8-10――other.html
+<template>
+	<h1>${title}</h1>
+	<p>${message}</p>
+</template>
+
+
+List 8-11――other.ts
+export class Other {
+	title: string = 'Other page';
+	message: string = 'This is Other page content...';
+}
+
+
+List 8-12
+<template bindable="router">
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="navbar-header">
+		<button type="button" class="navbar-toggle" data-toggle="collapse" 
+			data-target="#bs-example-navbar-collapse-1">
+		<span class="sr-only">Toggle Navigation</span>
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+		</button>
+		<a class="navbar-brand" href="#">
+			<i class="fa fa-home"></i>
+			<span>${router.title}</span>
+		</a>
+	</div>
+
+	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		<ul class="nav navbar-nav">
+			<li repeat.for="row of router.navigation" 
+					class="${row.isActive ? 'active' : ''}">
+				<a href.bind="row.href">${row.title}</a>
+			</li>
+		</ul>
+
+		<ul class="nav navbar-nav navbar-right">
+			<li class="loader" if.bind="router.isNavigating">
+				<i class="fa fa-spinner fa-spin fa-2x"></i>
+			</li>
+		</ul>
+	</div>
+	</nav>
+</template>
+
+
+List 8-13
+<template>
+	<require from="bootstrap/css/bootstrap.css"></require>
+	<require from="font-awesome/css/font-awesome.css"></require>.bind
+	<require from='./nav-bar.html'></require>
+
+	<nav-bar router.bind="router"></nav-bar>
+
+	<div class="page-host">
+		<router-view></router-view>
+	</div>
+</template>
+
+
+List 8-14
+import {RouterConfiguration, Router} from 'aurelia-router';
+
+export class App {
+	router: Router;
+
+	configureRouter(config: RouterConfiguration, router: Router) {
+		config.title = 'Aurelia';
+		config.map([
+			{ route: ['','top'], name: 'Top', moduleId: './top', nav: true, title:'Top Page' },
+			{ route: 'other', name: 'other', moduleId: './other', nav: true, title:'Other' }
+		]);
+
+		this.router = router;
+	}
+}
+
+
+List 8-15
+<template>
+	<style>
+		div {font-size: 16pt;}
+	</style>
+
+	<h1>${title}</h1>
+	<p>${message}</p>
+
+	<div><input type="checkbox" id="ch1" 
+		change.trigger="onCBChecked()" checked.bind="check1">
+	<label for="ch1">check box</label></div>
+	<div><input type="radio" name="radio1" id="r1" 
+		change.trigger="onRBChecked('A')" value="A">
+	<label for="r1">radio A</label></div>
+	<div><input type="radio" name="radio1" id="r2" 
+		change.trigger="onRBChecked('B')" value="B">
+	<label for="r2">radio B</label></div>
+</template>
+
+
+List 8-16
+export class Top {
+	title: string = 'Top page';
+	message: string = '...';
+	check1:boolean = false;
+	radio1:string = 'not selected.';
+
+	onCBChecked(){
+		//this.message = 'checked: ' + this.check1;
+		this.update();
+	}
+	onRBChecked(val){
+		this.radio1 = val;
+		this.update();
+	}
+	update(){
+		this.message = 'checked:' + !this.check1 + 
+			', radio:' + this.radio1;
+	}
+}
+
+
+List 8-17
+<template>
+	<style>
+		div {font-size: 14pt;}
+	</style>
+	<h1>${title}</h1>
+	<p>${message}</p>
+	
+	<div><select value.bind="select1" change.trigger="onSel1Changed()">
+		<option value="Windows">Windows</option>
+		<option value="macOS">macOS</option>
+		<option value="Linux">Linux</option>
+		<option value="Android">Android</option>
+		<option value="iOS">iOS</option>
+	</select></div>
+	<hr>
+	<select multiple size="5" value.bind="select2" change.trigger="onSel2Changed()">
+		<option value="Windows">Windows</option>
+		<option value="macOS">macOS</option>
+		<option value="Linux">Linux</option>
+		<option value="Android">Android</option>
+		<option value="iOS">iOS</option>
+	</select>
+</template>
+
+
+List 8-18
+export class Top {
+	title: string = 'Top page';
+	message: string = '...';
+	select1:string = '';
+	select2:string[];
+
+	onSel1Changed(){
+		this.update();
+	}
+	onSel2Changed(){
+		this.update();
+	}
+	update(){
+		this.message = 'selected:' + this.select1 + 
+			' [' + this.select2 + ']';
+	}
+}
+
+
+List 8-19――top.html
+<template>
+	<require from="./number-formatter"></require>
+	<style>
+		div {font-size: 14pt;}
+	</style>
+	<h1>${title}</h1>
+	<p>${input1 | numberFormatter}</p>
+	
+	<div><input type="text" value.bind="input1">
+	</div>
+</template>
+
+
+List 8-20――top.ts
+export class Top {
+	title: string = 'Top page';
+	message: string = '...';
+	input1:string = '';
+}
+
+
+List 8-21――date-formatter.ts
+export class DateFormatterValueConverter {
+	toView(value) {
+		return value.toLocaleDateString();
+	}
+}
+
+
+List 8-22――time-formatter.ts
+export class TimeFormatterValueConverter {
+	toView(value) {
+		return value.toLocaleTimeString();
+	}
+}
+
+
+List 8-23
+export class DateComponent {
+	currentDate: Date;
+
+	constructor() {
+		this.update();
+		setInterval(() => this.update(), 1000);
+	}
+
+	update() {
+		this.currentDate = new Date();
+	}
+}
+
+
+List 8-24
+<template>
+	<style>
+	p {font-size:18pt;}
+	</style>
+	<require from="./date-formatter"></require>
+	<require from="./time-formatter"></require>
+	<p>${currentDate}</p>
+	<p>${currentDate | dateFormatter}</p>
+	<p>${currentDate | timeFormatter}</p>
+</template>
+
+
+List8-25――top.html
+<template>
+	<h1>${title}</h1>
+	<p>${message}</p>
+
+	<require from="./date-component"></require>
+	<date-component></date-component>
+</template>
+
+
+List 8-26――top.ts
+export class Top {
+	title: string = 'Top page';
+	message: string = '顯示現在的日期與時間：';
+	input1:string = '';
+}
+
+
+List 8-27――my-tag.ts
+import {bindable} from 'aurelia-framework';
+
+export class MyTag {
+	@bindable myAttr = '';
+	@bindable border:boolean = false;
+}
+
+
+List 8-28――my-tag.html
+<template>
+	<p style="padding:5px; color:red; ${border ? 'border:1px solid gray;' : ''}">
+		${myAttr}</p>
+</template>
+
+
+List 8-29――top.ts
+export class Top {
+	title: string = 'Top page';
+	message: string = '對組件增加屬性';
+}
+
+
+List 8-30――top.html
+<template>
+	<require from="./my-tag"></require>
+	<style>
+	div {font-size:18pt; margin:5px;}
+	</style>
+	<h1>${title}</h1>
+	<p>${message}</p>
+
+	<my-tag my-attr="自製的組件"></my-tag>
+	<my-tag my-attr="開啟邊框的狀況" border="true"></my-tag>
+</template>
+
+
+List 8-31――my-attr.ts
+import {inject} from 'aurelia-framework';
+
+@inject(Element)
+export class MyAttrCustomAttribute {
+
+	constructor(private element: Element){
+		this.element = element;
+		this.element.style.width = '100px';
+		this.element.style.height = '100px';
+		this.element.style.backgroundColor = 'lightgray';
+		this.element.style.border = '1px solid gray';
+	}
+}
+
+
+List 8-32――top.ts
+export class Top {
+	title: string = 'Top page';
+	message: string = '使用自訂屬性';
+}
+
+
+List 8-33――top.html
+<template>
+	<require from="./my-attr"></require>
+	<style>
+	div {font-size:18pt; margin:5px;}
+	</style>
+	<h1>${title}</h1>
+	<p>${message}</p>
+
+	<div my-attr>custom attr!</div>
+</template>
+
+
+List8-34――my-attr.ts
+import {inject} from 'aurelia-framework';
+
+@inject(Element)
+export class MyAttrCustomAttribute {
+
+	constructor(private element: Element){
+		this.element = element;
+		this.element.style.width = '100px';
+		this.element.style.height = '100px';
+		this.element.style.border = '1px solid gray';
+	}
+
+	valueChanged(newValue, oldValue) {
+		var data:string[] = newValue.split(' ');
+		this.element.style.backgroundColor = data[0];
+		if (data.length > 1){
+			this.element.style.width = data[1];
+			this.element.style.height = data[1];
+		}
+		if (data.length > 2){
+			this.element.style.border = data[2] + ' solid gray';
+		}
+	}
+}
+
+
+List 8-35
+<template>
+	<require from="./my-attr"></require>
+	<style>
+	div {font-size:18pt; margin:5px;}
+	</style>
+	<h1>${title}</h1>
+	<p>${message}</p>
+
+	<div my-attr="red 75px">red!</div>
+	<p my-attr="yellow 150px 10px">yellow!</p>
+</template>
+
+
+List 8-36――my-tag.ts
+export class MyTag {
+}
+
+
+List 8-37――my-tag.html
+<template>
+	<p style="font-size:18pt;">
+	您好！
+		<span  style="color:red;font-size:24pt;">
+			<content></content>
+		</span>先生／小姐！
+	</p>
+</template>
+
+
+List 8-38
+<template>
+	<require from="./my-tag"></require>
+	<h1>${title}</h1>
+	<p>${message}</p>
+
+	<my-tag>山田太郎</my-tag>
+
+</template>
+
+
+List 8-39
+{
+	"title": "Aurelia Sample Data",
+	"description": "此為Aurelia所使用的範例資料。",
+	"data":[
+		{"name":"Taro", "mail": "taro@yamada", "tel":"090-999-999"},
+		{"name":"Hanako", "mail": "hanako@flower", "tel":"080-888-888"},
+		{"name":"Sachiko", "mail": "sachiko@happy", "tel":"070-777-777"}
+	]
+}
+
+
+List 8-40
+import {HttpClient} from 'aurelia-fetch-client';
+
+export class Other {
+	client: HttpClient = null;
+	respData: Object = null;
+
+	constructor(){
+		this.client = new HttpClient();
+	}
+	activate(){
+		this.client.fetch('./src/data.json')
+			.then(response => response.json())
+			.then(data => {
+				this.respData = data;
+			}
+		);
+	}
+}
+
+
+List 8-41
+<template>
+	<style>
+	th {background:#666; color:white; padding:10px 15px; border:2px solid white;}
+	td {background:#eee; color:black; padding:10px 15px; border:2px solid white;}
+	</style>
+	<h1>${respData.title}</h1>
+	<p>${respData.description}</p>
+	<table>
+		<tr>
+			<th>Name</th>
+			<th>Mail</th>
+			<th>Tel</th>
+		</tr>
+		<tr repeat.for="obj of respData.data">
+			<td>${obj.name}</td>
+			<td>${obj.mail}</td>
+			<td>${obj.tel}</td>
+		</tr>
+	</table>
+</template>
